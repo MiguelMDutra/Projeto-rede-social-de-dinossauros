@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.addColumn("Dinosaurs", "genus", {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
     });
   },
