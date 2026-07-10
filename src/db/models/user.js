@@ -29,17 +29,59 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      passwordHash: DataTypes.STRING,
-      profilePhoto: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        notEmpty: true,
+        validate: {
+          notEmpty: {
+            msg: "Todos temos nome, não precisa ter vergonha!",
+          },
+          len: {
+            args: [3, 100],
+            msg: "O nome deve ter no mínimo 3 caracteres e no máximo 100",
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        notEmpty: true,
+        unique: true,
+        validate: {
+          isEmail: {
+            msg: "Digite um email válido.",
+          },
+          notEmpty: {
+            msg: "O email é necessário.",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        notEmpty: true,
+        validate: {
+          notEmpty: {
+            msg: "A senha é muito importante",
+          },
+          len: {
+            args: [8, 100],
+            msg: "A senha deve ter no mínimo 8 caracteres e no máximo 100",
+          },
+        },
+      },
+      pfp: DataTypes.STRING,
       bio: DataTypes.TEXT,
-      levelId: DataTypes.INTEGER,
-      points: DataTypes.INTEGER,
+      levelId: { type: DataTypes.INTEGER, defaultValue: 1 },
+      points: { type: DataTypes.INTEGER, defaultValue: 0 },
     },
     {
       sequelize,
       modelName: "User",
+      hooks: {
+        beforeCreate: async (user) => {
+          const bcrypt = require("bcrypt");
+          user.password = await bcrypt.hash(user.password, 12);
+        },
+      },
     },
   );
   return User;

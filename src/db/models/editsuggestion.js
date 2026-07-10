@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class EditSuggestion extends Model {
     static associate(models) {
-      EditSuggestion.belongsTo(models.user, {
+      EditSuggestion.belongsTo(models.User, {
         foreignKey: "usuario_id",
         as: "users",
       });

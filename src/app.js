@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
+const routes = require("./routes/mainRoutes.js");
 const ErrorHandler = require("./middlewares/ErrorHandler.js");
 const error404 = require("./middlewares/Error404.js");
 
-app.use(express.json());
+routes(app);
 app.use(error404);
 app.use(ErrorHandler);
 

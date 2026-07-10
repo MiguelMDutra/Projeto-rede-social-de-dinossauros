@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Dinosaur extends Model {
     static associate(models) {
-      Dinosaur.belongsTo(models.Period, {
+      Dinosaur.belongsTo(models.GeologicalPeriod, {
         foreignKey: "periodId",
         as: "period",
       });

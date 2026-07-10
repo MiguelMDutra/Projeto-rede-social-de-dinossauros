@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class GeologicalPeriod extends Model {
     static associate(models) {
-      GeologicalPeriod.hasMany(models.Dinossaur, {
+      GeologicalPeriod.hasMany(models.Dinosaur, {
         forkeignKey: "geologicalPeriodId",
         as: "dinossaurs",
       });
