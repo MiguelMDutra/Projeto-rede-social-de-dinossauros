@@ -8,13 +8,18 @@ class UserServices extends Services {
     super("User");
   }
 
-  login(data) {
-    const user = dataSource["User"].findOne({
+  async login(data) {
+    const user = await User.findOne({
       where: { email: data.email },
     });
-    if (user)
-      return bcrypt.compare(user.password, 12, function (err, result) {});
-    else return false;
+
+    if (!user) return null;
+
+    const passwordValid = await bcrypt.compare(data.password, user.password);
+
+    if (!passwordValid) return null;
+
+    return user;
   }
 }
 

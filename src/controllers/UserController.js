@@ -12,7 +12,7 @@ class UserController extends Controller {
   async login(req, res, next) {
     try {
       const response = await userServices.login(req.body);
-      if (response === false) {
+      if (response === false || response === undefined) {
         next(new Unauthorized("Email ou senha errados"));
       } else {
         res.status(200).json({ message: "bora porra" });
