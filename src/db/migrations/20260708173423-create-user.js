@@ -33,6 +33,27 @@ module.exports = {
       points: {
         type: Sequelize.INTEGER,
       },
+      levelId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Levels",
+          key: "id",
+        },
+      },
+      followerId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
+      followingId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

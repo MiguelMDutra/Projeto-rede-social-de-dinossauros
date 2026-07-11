@@ -9,17 +9,22 @@ class UserServices extends Services {
   }
 
   async login(data) {
-    const user = await User.findOne({
+    const user = await dataSource["User"].findOne({
       where: { email: data.email },
     });
-
     if (!user) return null;
-
     const passwordValid = await bcrypt.compare(data.password, user.password);
-
     if (!passwordValid) return null;
-
     return user;
+  }
+
+  async getMyself(id) {
+    console.log("getMyself");
+    return await dataSource["User"].findByPk(id, {
+      attributes: {
+        exclude: ["password"],
+      },
+    });
   }
 }
 

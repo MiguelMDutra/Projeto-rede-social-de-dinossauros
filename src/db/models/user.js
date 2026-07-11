@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, where } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
@@ -72,10 +72,13 @@ module.exports = (sequelize, DataTypes) => {
       bio: DataTypes.TEXT,
       levelId: { type: DataTypes.INTEGER, defaultValue: 1 },
       points: { type: DataTypes.INTEGER, defaultValue: 0 },
+      role: { type: DataTypes.STRING, values: ["user", "admin"] },
+      active: DataTypes.BOOLEAN,
     },
     {
       sequelize,
       modelName: "User",
+      defaultScope: { where: { active: true } },
       hooks: {
         beforeCreate: async (user) => {
           const bcrypt = require("bcrypt");
