@@ -8,6 +8,25 @@ class UserServices extends Services {
     super("User");
   }
 
+  async getUsers(scope = {}, offset = 0, limit = 5) {
+    try {
+      const users = await dataSource["User"].findAll(
+        scope,
+        { offset: offset, limit: offset + limit },
+        {
+          attributes: {
+            exclude: {
+              password,
+            },
+          },
+        },
+      );
+      return users;
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async login(data) {
     const user = await dataSource["User"].findOne({
       where: { email: data.email },

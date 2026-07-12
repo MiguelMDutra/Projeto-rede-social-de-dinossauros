@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Dinosaur extends Model {
     static associate(models) {
       Dinosaur.belongsTo(models.GeologicalPeriod, {
-        foreignKey: "periodId",
+        foreignKey: "geologicalPeriodId",
         as: "period",
       });
       Dinosaur.belongsTo(models.Habitat, {
@@ -46,15 +46,25 @@ module.exports = (sequelize, DataTypes) => {
       mainImage: DataTypes.STRING,
       status: DataTypes.STRING,
       creatorUserId: DataTypes.INTEGER,
-      periodId: DataTypes.INTEGER,
       habitatId: DataTypes.INTEGER,
       classificationId: DataTypes.INTEGER,
       siteId: DataTypes.INTEGER,
       genus: DataTypes.STRING,
+      geologicalPeriodId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "Dinosaur",
+      defaultScope: { where: { status: "aprovado" } },
+      scopes: {
+        pending: { where: { status: "pendente" } },
+        negado: { where: { status: "negado" } },
+      },
+      hooks: {
+        beforeCreate: async (dino) => {
+          dino.status = "pendente";
+        },
+      },
     },
   );
   return Dinosaur;

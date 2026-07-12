@@ -15,6 +15,21 @@ class Controller {
     }
   }
 
+  async getByName(req, res, next) {
+    try {
+      const { name } = req.query;
+      console.log(name);
+      const response = await this.service.getByServices(
+        {},
+        { where: { name: name } },
+      );
+      res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
   async post(req, res, next) {
     try {
       const data = req.body;
@@ -26,6 +41,21 @@ class Controller {
       }
     } catch (error) {
       console.log(error);
+      next(error);
+    }
+  }
+
+  async update(req, res, next) {
+    try {
+      const data = req.body;
+      const [updated] = await this.service.updateServices(
+        data,
+        where,
+        (scope = {}),
+      );
+      if (updated) res.status(200).json("Atualizado com sucesso");
+      else return;
+    } catch (error) {
       next(error);
     }
   }

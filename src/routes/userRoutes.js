@@ -16,4 +16,8 @@ Router.post("/user/login", (req, res, next) =>
   userController.login(req, res, next),
 );
 
+Router.put("/user/deactivate", (req, res, next) =>
+  userController.deactivateAccount(req, res, next),
+);
+
 module.exports = Router;

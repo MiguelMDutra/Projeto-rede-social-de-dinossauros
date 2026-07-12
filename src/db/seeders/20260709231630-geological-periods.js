@@ -1,44 +1,40 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    ("GeologicalPeriods",
+  async up(queryInterface) {
+    await queryInterface.bulkInsert(
+      "GeologicalPeriods",
       [
         {
-          name: "Novato",
-          description: "Começando a contribuir com a comunidade.",
-          minPoints: 0,
-          icon: "seedling",
+          name: "Triássico",
+          startMa: 252.17,
+          endMa: 201.3,
+          description: "Primeiro período da Era Mesozoica.",
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
-          name: "Pesquisador",
-          description: "Contribuidor ativo da plataforma.",
-          minPoints: 100,
-          icon: "search",
+          name: "Jurássico",
+          startMa: 201.3,
+          endMa: 145.0,
+          description: "Segundo período da Era Mesozoica.",
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
-          name: "Especialista",
-          description: "Possui diversas contribuições aprovadas.",
-          minPoints: 500,
-          icon: "graduation-cap",
+          name: "Cretáceo",
+          startMa: 145.0,
+          endMa: 66.0,
+          description: "Último período da Era Mesozoica.",
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
-        {
-          name: "Paleontólogo",
-          description: "Referência na comunidade.",
-          minPoints: 1500,
-          icon: "award",
-        },
-        {
-          name: "Lenda",
-          description: "Maior nível de reputação da plataforma.",
-          minPoints: 5000,
-          icon: "crown",
-        },
-      ]);
+      ],
+      {},
+    );
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.bulkDelete("GeologicalPeriods", null, {});
   },
 };

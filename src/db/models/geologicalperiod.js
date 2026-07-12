@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   class GeologicalPeriod extends Model {
     static associate(models) {
       GeologicalPeriod.hasMany(models.Dinosaur, {
-        forkeignKey: "geologicalPeriodId",
-        as: "dinossaurs",
+        foreignKey: "geologicalPeriodId",
+        as: "dinosaurs",
       });
     }
   }

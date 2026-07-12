@@ -5,17 +5,34 @@ class Services {
     this.model = model;
   }
 
-  async getAllServices() {
-    return await dataSource[this.model].findAll();
+  async getAllServices(scope = {}, options = {}) {
+    const model = scope
+      ? dataSource[this.model].scope(scope)
+      : dataSource[this.model];
+
+    return await model.findAll(options);
   }
 
-  async postServices(data) {
+  async getByServices(scope = {}, options = {}) {
+    const model = scope
+      ? dataSource[this.model].scope(scope)
+      : dataSource[this.model];
+
+    return await model.findAll(options);
+  }
+
+  async postServices(data, where = {}) {
     return await dataSource[this.model].findOrCreate({
-      where: {
-        email: data.email,
-      },
+      where,
       defaults: data,
     });
+  }
+
+  async updateServices(data, where, scope = {}) {
+    const model = scope
+      ? dataSource[this.model].scope(scope)
+      : dataSource[this.model];
+    return await model.update(data, where);
   }
 }
 
