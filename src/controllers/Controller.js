@@ -1,3 +1,4 @@
+const { Op } = require("@sequelize/core");
 const Conflict = require("../Errors/Conflict");
 
 class Controller {
@@ -10,7 +11,16 @@ class Controller {
       const response = await this.service.getAllServices();
       res.status(200).json(response);
     } catch (error) {
-      console.log(error);
+      next(error);
+    }
+  }
+
+  async getById(req, res, next) {
+    try {
+      const id = req.params;
+      const response = await this.service.getById(id);
+      res.status(200).json(response);
+    } catch (error) {
       next(error);
     }
   }
@@ -21,11 +31,10 @@ class Controller {
       console.log(name);
       const response = await this.service.getByServices(
         {},
-        { where: { name: name } },
+        { where: { name: { [Op.substring]: name } } },
       );
       res.status(200).json(response);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -40,19 +49,15 @@ class Controller {
         next(new Conflict());
       }
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
 
   async update(req, res, next) {
     try {
+      const id = req.params;
       const data = req.body;
-      const [updated] = await this.service.updateServices(
-        data,
-        where,
-        (scope = {}),
-      );
+      const [updated] = await this.service.updateServices(data, { id });
       if (updated) res.status(200).json("Atualizado com sucesso");
       else return;
     } catch (error) {

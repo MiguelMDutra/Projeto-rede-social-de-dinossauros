@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "sourceId",
         as: "sources",
       });
+      Dinosaur.belongsTo(models.User, { foreignKey: "creatorId", as: "user" });
     }
   }
   Dinosaur.init(

@@ -1,43 +1,46 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Classifications', {
+    await queryInterface.createTable("Classifications", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       kingdom: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       phylum: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       class: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       order: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       family: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       genus: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+      },
+      diet: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Classifications');
-  }
+    await queryInterface.dropTable("Classifications");
+  },
 };

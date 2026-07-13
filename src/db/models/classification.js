@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       class: DataTypes.STRING,
       order: DataTypes.STRING,
       family: DataTypes.STRING,
+      diet: {
+        type: DataTypes.STRING,
+        values: ["carnivoro", "herbivoro", "onivoro"],
+      },
     },
     {
       sequelize,

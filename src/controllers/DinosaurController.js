@@ -1,4 +1,5 @@
 const Conflict = require("../Errors/Conflict.js");
+const BadRequest = require("../Errors/BadRequest.js");
 const DinosaurServices = require("../services/DinosaurServices.js");
 const Controller = require("./Controller.js");
 const dinosaurServices = new DinosaurServices();
@@ -18,13 +19,16 @@ class DinosaurController extends Controller {
   }
   async approvePendingDino(req, res, next) {
     try {
-      const { genus } = req.body;
+      const id = req.params;
       const dinos = await dinosaurServices.updateServices(
         { status: "aprovado" },
-        { where: { genus } },
+        { where: id },
         "pending",
       );
-      res.status(200).json(dinos);
+      if (dinos[0] == 0) {
+        next(new BadRequest("Dinossauro não existe no banco"));
+      }
+      res.status(200).json("alterado com sucesso");
     } catch (error) {
       console.log(error);
       next(error);
@@ -32,10 +36,10 @@ class DinosaurController extends Controller {
   }
   async disapprovePendingDino(req, res, next) {
     try {
-      const { genus } = req.body;
+      const id = req.params;
       const dinos = await dinosaurServices.updateServices(
         { status: "negado" },
-        { where: { genus } },
+        { where: id },
         "pending",
       );
       res.status(200).json(dinos);
@@ -59,6 +63,17 @@ class DinosaurController extends Controller {
       }
     } catch (error) {
       console.log(error);
+      next(error);
+    }
+  }
+
+  async getDinosBy(req, res, next) {
+    try {
+      const query = req.query;
+      console.log(query);
+      const dinos = await this.service.getDinosBy(query);
+      res.status(200).json(dinos);
+    } catch (error) {
       next(error);
     }
   }
