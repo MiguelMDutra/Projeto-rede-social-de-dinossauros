@@ -9,15 +9,14 @@ class Services {
     const model = scope
       ? dataSource[this.model].scope(scope)
       : dataSource[this.model];
-
     return await model.findAll(options);
   }
 
   async getById(id) {
-    return await model.findByPk(id);
+    return await dataSource[this.model].findByPk(id);
   }
 
-  async postServices(data, where = {}) {
+  async postServices(data, where) {
     return await dataSource[this.model].findOrCreate({
       where,
       defaults: data,
@@ -29,6 +28,13 @@ class Services {
       ? dataSource[this.model].scope(scope)
       : dataSource[this.model];
     return await model.update(data, where);
+  }
+
+  async destroyServices(id) {
+    return await model.destroy(id);
+  }
+  async restoreServices(id) {
+    return await model.restore(id);
   }
 }
 

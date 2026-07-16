@@ -1,5 +1,5 @@
-const Services = require("./Services");
-const dataSource = require("../db/models");
+const Services = require("../../services/Services");
+const dataSource = require("../../db/models");
 
 const bcrypt = require("bcrypt");
 

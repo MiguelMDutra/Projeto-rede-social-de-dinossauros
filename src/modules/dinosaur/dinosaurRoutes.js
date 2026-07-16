@@ -1,5 +1,5 @@
 const express = require("express");
-const DinosaurController = require("../controllers/DinosaurController");
+const DinosaurController = require("../../core/controller/DinosaurController.js");
 const isAuth = require("../Auth/isAuth");
 const dinosaurController = new DinosaurController();
 const isAdmin = require("../Auth/isAdmin.js");

@@ -3,7 +3,7 @@ const { Model, where } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.belongsTo(models.Level, { foreignKey: "levelId", as: "level" });
+      User.belongsTo(models.Level, { foreignKey: "levelId", as: "Levels" });
       User.hasMany(models.Post, { foreignKey: "userId", as: "posts" });
       User.hasMany(models.Notification, {
         foreignKey: "userId",
@@ -17,13 +17,15 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "followingId",
         as: "following",
       });
-
-      // Pessoas que seguem ESTE usuário
       User.belongsToMany(models.User, {
         through: models.Follow,
         foreignKey: "followingId",
         otherKey: "followerId",
         as: "followers",
+      });
+      User.hasMany(models.Classification, {
+        foreignKey: "userId",
+        as: "classifications",
       });
     }
   }

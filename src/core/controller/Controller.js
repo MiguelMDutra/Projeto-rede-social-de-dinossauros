@@ -1,5 +1,6 @@
 const { Op } = require("@sequelize/core");
-const Conflict = require("../Errors/Conflict");
+const Conflict = require("../../Errors/Conflict.js");
+const BadRequest = require("../../Errors/BadRequest.js");
 
 class Controller {
   constructor(service) {
@@ -11,13 +12,14 @@ class Controller {
       const response = await this.service.getAllServices();
       res.status(200).json(response);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
 
   async getById(req, res, next) {
     try {
-      const id = req.params;
+      const { id } = req.params;
       const response = await this.service.getById(id);
       res.status(200).json(response);
     } catch (error) {
@@ -34,20 +36,6 @@ class Controller {
         { where: { name: { [Op.substring]: name } } },
       );
       res.status(200).json(response);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async post(req, res, next) {
-    try {
-      const data = req.body;
-      const [created, isCreated] = await this.service.postServices(data);
-      if (isCreated) {
-        res.status(200).json(created);
-      } else {
-        next(new Conflict());
-      }
     } catch (error) {
       next(error);
     }

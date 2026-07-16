@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "classificationId",
         as: "dinosaurs",
       });
+      Classification.belongsTo(models.User, {
+        foreignKey: "userId",
+        as: "creator",
+      });
     }
   }
   Classification.init(
@@ -17,13 +21,15 @@ module.exports = (sequelize, DataTypes) => {
       order: DataTypes.STRING,
       family: DataTypes.STRING,
       diet: {
-        type: DataTypes.STRING,
-        values: ["carnivoro", "herbivoro", "onivoro"],
+        type: DataTypes.ENUM("carnivoro", "herbivoro", "onivoro"),
       },
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "Classification",
+      scopes: { users: "userId" },
+      paranoid: true,
     },
   );
   return Classification;

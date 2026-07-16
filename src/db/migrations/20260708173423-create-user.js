@@ -27,9 +27,6 @@ module.exports = {
       bio: {
         type: Sequelize.STRING,
       },
-      levelId: {
-        type: Sequelize.INTEGER,
-      },
       points: {
         type: Sequelize.INTEGER,
       },
