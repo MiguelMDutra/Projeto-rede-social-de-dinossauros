@@ -14,7 +14,7 @@ module.exports = {
         mainImage: "tyrannosaurus-rex.jpg",
         status: "aprovado",
 
-        creatorUserId: 1,
+        userId: 1,
         habitatId: 1,
         classificationId: 1,
         siteId: 1,
@@ -34,7 +34,7 @@ module.exports = {
         mainImage: "triceratops.jpg",
         status: "aprovado",
 
-        creatorUserId: 1,
+        userId: 1,
         habitatId: 2,
         classificationId: 2,
         siteId: 2,
@@ -54,7 +54,7 @@ module.exports = {
         mainImage: "velociraptor.jpg",
         status: "aprovado",
 
-        creatorUserId: 1,
+        userId: 1,
         habitatId: 3,
         classificationId: 1,
         siteId: 3,

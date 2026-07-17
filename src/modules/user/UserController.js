@@ -1,9 +1,12 @@
-const Controller = require("./Controller.js");
-const UserServices = require("../services/UserServices.js");
+const Controller = require("../../core/controller/Controller.js");
+const UserServices = require("./UserServices.js");
+
 const userServices = new UserServices();
-const Unauthorized = require("../errors/Unauthorized.js");
+
+const Unauthorized = require("../../core/Errors/Unauthorized.js");
+const Conflict = require("../../core/Errors/Conflict.js");
+
 const createJWT = require("../Auth/createJWT.js");
-const Conflict = require("../Errors/Conflict.js");
 const verifyToken = require("../Auth/verifyToken.js");
 
 class UserController extends Controller {
@@ -13,10 +16,20 @@ class UserController extends Controller {
 
   async getUsers(req, res, next) {
     try {
-      const response = await userServices.getUsers();
+      const { offset, limit } = req.query;
+      const response = await userServices.getUsers({}, offset, limit);
       res.status(200).json(response);
     } catch (error) {
       console.log(error);
+      next(error);
+    }
+  }
+
+  async myAccount(req, res, next) {
+    try {
+      const user = await userServices.getMyself(req.user.id);
+      return res.status(200).json(user);
+    } catch (error) {
       next(error);
     }
   }
@@ -48,29 +61,6 @@ class UserController extends Controller {
         const token = createJWT(user);
         return res.status(200).json(token);
       }
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async myAccount(req, res, next) {
-    try {
-      const user = await userServices.getMyself(req.user.id);
-      return res.status(200).json(user);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async deactivateAccount(req, res, next) {
-    try {
-      const { email } = req.body;
-      console.log(email);
-      const token = req.headers.authorization.split(" ")[1];
-      const user = verifyToken(token);
-      if (email !== user.email) return next(new Unauthorized("Email errado"));
-      await userServices.updateServices({ active: 0 }, { email });
-      res.status(200).json({ message: "Conta desativada com sucesso" });
     } catch (error) {
       next(error);
     }

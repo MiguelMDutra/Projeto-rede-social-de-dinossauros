@@ -1,7 +1,9 @@
-const Services = require("../../services/Services");
+const Services = require("../../core/services/Services");
 const dataSource = require("../../db/models");
 
 const bcrypt = require("bcrypt");
+
+const model = dataSource["User"];
 
 class UserServices extends Services {
   constructor() {
@@ -10,7 +12,7 @@ class UserServices extends Services {
 
   async getUsers(scope = {}, offset = 0, limit = 5) {
     try {
-      const users = await dataSource["User"].findAll(
+      const users = await model.findAll(
         scope,
         { offset: offset, limit: offset + limit },
         {
@@ -27,23 +29,22 @@ class UserServices extends Services {
     }
   }
 
+  async getMyself(id) {
+    return await model.findByPk(id, {
+      attributes: {
+        exclude: ["password"],
+      },
+    });
+  }
+
   async login(data) {
-    const user = await dataSource["User"].findOne({
+    const user = await model.findOne({
       where: { email: data.email },
     });
     if (!user) return null;
     const passwordValid = await bcrypt.compare(data.password, user.password);
     if (!passwordValid) return null;
     return user;
-  }
-
-  async getMyself(id) {
-    console.log("getMyself");
-    return await dataSource["User"].findByPk(id, {
-      attributes: {
-        exclude: ["password"],
-      },
-    });
   }
 }
 

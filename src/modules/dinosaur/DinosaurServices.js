@@ -1,5 +1,7 @@
-const Services = require("../../services/Services");
+const Services = require("../../core/services/Services");
 const dataSource = require("../../db/models");
+
+const model = dataSource["Dinosaur"];
 
 class DinosaurServices extends Services {
   constructor() {
@@ -61,6 +63,13 @@ class DinosaurServices extends Services {
         habitatInclude,
         userInclude,
       ],
+    });
+  }
+
+  async postDino(data) {
+    return await model.findOrCreate({
+      where: { genus: data.genus },
+      default: { data },
     });
   }
 }

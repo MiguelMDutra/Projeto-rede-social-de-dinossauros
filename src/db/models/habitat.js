@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "habitatId",
         as: "dinosaurs",
       });
+      Habitat.belongsTo(models.User, { foreignKey: "userId", as: "creator" });
     }
   }
   Habitat.init(
@@ -15,10 +16,21 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.TEXT,
       climate: DataTypes.STRING,
       vegetation: DataTypes.STRING,
+      status: {
+        type: DataTypes.ENUM("Approved", "Pending", "Rejected"),
+        defaultValue: "Pending",
+      },
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "Habitat",
+      defaultScope: { where: { status: "Approved" } },
+      scopes: {
+        pending: { where: { status: "Pending" } },
+        rejected: { where: { status: "Rejected" } },
+        all: {},
+      },
     },
   );
   return Habitat;

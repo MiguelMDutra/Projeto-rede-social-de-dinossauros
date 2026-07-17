@@ -32,7 +32,7 @@ module.exports = {
         values: ["aprovado", "pendente", "negado"],
         defaultValue: "pendente",
       },
-      creatorUserId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",

@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "sourceId",
         as: "sources",
       });
-      Dinosaur.belongsTo(models.User, { foreignKey: "creatorId", as: "user" });
+      Dinosaur.belongsTo(models.User, { foreignKey: "userId", as: "user" });
     }
   }
   Dinosaur.init(
@@ -46,12 +46,12 @@ module.exports = (sequelize, DataTypes) => {
       lengthM: DataTypes.FLOAT,
       mainImage: DataTypes.STRING,
       status: DataTypes.STRING,
-      creatorUserId: DataTypes.INTEGER,
       habitatId: DataTypes.INTEGER,
       classificationId: DataTypes.INTEGER,
       siteId: DataTypes.INTEGER,
       genus: DataTypes.STRING,
       geologicalPeriodId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,

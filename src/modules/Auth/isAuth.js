@@ -1,4 +1,4 @@
-const Unauthorized = require("../errors/Unauthorized.js");
+const Unauthorized = require("../../core/errors/Unauthorized.js");
 const verifyToken = require("./verifyToken.js");
 
 function isAuth(req, res, next) {
