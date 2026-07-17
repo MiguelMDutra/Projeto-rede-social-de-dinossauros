@@ -7,17 +7,17 @@ const Router = express.Router();
 
 Router.get("/geologicalPeriod", isAuth, (req, res, next) =>
   geologicalPeriodController.getAll(req, res, next),
-);
+); //tested
 Router.post("/geologicalPeriod", isAuth, (req, res, next) =>
   geologicalPeriodController.createGeological(req, res, next),
-);
+); //tested
 Router.get("/geologicalPeriod/:id", isAuth, (req, res, next) =>
   geologicalPeriodController.getById(req, res, next),
-);
+); //tested
 Router.patch("/geologicalPeriod/patch/:id", isAuth, (req, res, next) =>
   geologicalPeriodController.update(req, res, next),
 );
-Router.put("/geologicalPeriod/delete/:id", isAuth, (req, res, next) =>
+Router.patch("/geologicalPeriod/delete/:id", isAuth, (req, res, next) =>
   geologicalPeriodController.softDelete(req, res, next),
 );
 Router.put("/geologicalPeriod/restore/:id", isAuth, (req, res, next) =>

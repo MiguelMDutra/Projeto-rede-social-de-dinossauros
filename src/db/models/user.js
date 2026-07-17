@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "dinosaurs",
       });
       User.hasMany(models.Habitat, { foreignKey: "userId", as: "habitats" });
+      User.hasMany(models.GeologicalPeriod, {
+        foreignKey: "userId",
+        as: "geologicalPeriods",
+      });
     }
   }
   User.init(

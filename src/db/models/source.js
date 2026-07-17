@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   class Source extends Model {
     static associate(models) {
       Source.belongsToMany(models.Dinosaur, {
-        through: models.DinosaurSource,
+        through: "DinosaurSources",
         foreignKey: "sourceId",
         otherKey: "dinosaurId",
-        as: "dinosaur",
+        as: "dinosaurs",
       });
     }
   }

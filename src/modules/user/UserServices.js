@@ -11,22 +11,16 @@ class UserServices extends Services {
   }
 
   async getUsers(scope = {}, offset = 0, limit = 5) {
-    try {
-      const users = await model.findAll(
-        scope,
-        { offset: offset, limit: offset + limit },
-        {
-          attributes: {
-            exclude: {
-              password,
-            },
-          },
+    const users = await model.findAll(
+      scope,
+      { offset: offset, limit: offset + limit },
+      {
+        attributes: {
+          exclude: ["password"],
         },
-      );
-      return users;
-    } catch (error) {
-      next(error);
-    }
+      },
+    );
+    return users;
   }
 
   async getMyself(id) {

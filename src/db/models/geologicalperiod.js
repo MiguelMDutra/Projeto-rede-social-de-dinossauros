@@ -7,14 +7,20 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "geologicalPeriodId",
         as: "dinosaurs",
       });
+
+      GeologicalPeriod.belongsTo(models.User, {
+        foreignKey: "userId",
+        as: "creator",
+      });
     }
   }
   GeologicalPeriod.init(
     {
-      name: DataTypes.STRING,
-      startMa: DataTypes.FLOAT,
-      endMa: DataTypes.FLOAT,
-      description: DataTypes.TEXT,
+      name: { type: DataTypes.STRING, unique: true },
+      startMa: { type: DataTypes.FLOAT, unique: true },
+      endMa: { type: DataTypes.FLOAT, unique: true },
+      description: { type: DataTypes.TEXT, unique: true },
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,

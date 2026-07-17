@@ -23,17 +23,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "dinosaurId",
         as: "posts",
       });
-      Dinosaur.hasMany(models.DinosaurSource, {
-        foreignKey: "dinosaurId",
-        as: "dinosaurSources",
-      });
-
-      Dinosaur.belongsToMany(models.Source, {
-        through: models.DinosaurSource,
-        foreignKey: "dinosaurId",
-        otherKey: "sourceId",
-        as: "sources",
-      });
       Dinosaur.belongsTo(models.User, { foreignKey: "userId", as: "user" });
     }
   }

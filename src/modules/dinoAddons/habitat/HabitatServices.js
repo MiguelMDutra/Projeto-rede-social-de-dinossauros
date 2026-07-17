@@ -22,10 +22,11 @@ class HabitatServices extends Services {
   }
 
   async getUserHabitats(user) {
-    return await model.scope(all).findAll({ where: { userId: user.id } });
+    return await model.scope("all").findAll({ where: { userId: user.id } });
   }
 
   async createHabitat(data) {
+    console.log(data);
     const [habitat, created] = await model.findOrCreate({
       where: { name: data.name },
       default: {

@@ -10,7 +10,7 @@ class Controller {
 
   async getAll(req, res, next) {
     try {
-      const response = await this.service.getAll(req.query);
+      const response = await this.service.getAll({}, req.query);
       responseHelper(res, 200, response);
     } catch (error) {
       next(error);
@@ -21,6 +21,7 @@ class Controller {
     try {
       const { id } = req.params;
       const response = await this.service.getById(id);
+      console.log(response);
       responseHelper(res, 200, response);
     } catch (error) {
       next(error);
@@ -29,9 +30,12 @@ class Controller {
 
   async update(req, res, next) {
     try {
-      const id = req.params;
+      const { id } = req.params;
       const data = req.body;
-      const [updated] = await this.service.updateServices(data, { id });
+      const [updated] = await this.service.updateServices(data, {
+        where: { id },
+      });
+      console.log(updated);
       if (updated) responseHelper(res, 200, "", "Atualizado com sucesso");
       else return;
     } catch (error) {
@@ -53,11 +57,12 @@ class Controller {
   }
 
   async softDelete(req, res, next) {
-    return this.service.changeStatus(req, res, next, "destroy");
+    console.log(this.service);
+    return this.changeStatus(req, res, next, "destroy");
   }
 
   async restore(req, res, next) {
-    return this.service.changeStatus(req, res, next, "restore");
+    return this.changeStatus(req, res, next, "restore");
   }
 }
 

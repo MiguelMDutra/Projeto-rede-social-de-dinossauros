@@ -22,7 +22,8 @@ class HabitatController extends Controller {
   async createHabitat(req, res, next) {
     try {
       const data = req.body;
-      const habitat = await habitatServices.createHabitat({}, data);
+      console.log(data);
+      const habitat = await habitatServices.createHabitat(data);
       responseHelper(res, 201, habitat);
     } catch (error) {
       next(error);

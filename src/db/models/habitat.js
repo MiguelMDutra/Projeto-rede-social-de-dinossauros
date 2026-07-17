@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Habitat.init(
     {
-      name: DataTypes.STRING,
+      name: { type: DataTypes.STRING, unique: true },
       description: DataTypes.TEXT,
       climate: DataTypes.STRING,
       vegetation: DataTypes.STRING,
